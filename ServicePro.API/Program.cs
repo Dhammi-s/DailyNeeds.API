@@ -36,6 +36,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
 builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IPdfService, PdfService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 // ================= JWT AUTH =================
 var jwtKey = builder.Configuration["Jwt:Key"];
 var jwtIssuer = builder.Configuration["Jwt:Issuer"];
