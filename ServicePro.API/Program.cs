@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using QuestPDF.Infrastructure;
@@ -17,6 +18,10 @@ QuestPDF.Settings.CheckIfAllTextGlyphsAreAvailable = false;
 builder.Services.Configure<IISServerOptions>(options =>
 {
     options.AllowSynchronousIO = true;
+});
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 104857600; // 100MB
 });
 // ================= DATABASE =================
 builder.Services.AddDbContext<AppDbContext>(options =>

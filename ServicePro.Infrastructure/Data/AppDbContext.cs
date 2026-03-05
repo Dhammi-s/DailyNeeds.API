@@ -24,7 +24,7 @@ namespace ServicePro.Infrastructure.Data
         public DbSet<Product> Products { get; set; }
 
         public DbSet<ProductImage> ProductImages { get; set; }
-
+        public DbSet<Employee> Employees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

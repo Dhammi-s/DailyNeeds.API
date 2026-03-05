@@ -16,7 +16,7 @@ namespace ServicePro.Core.Interfaces
         Task<List<CategoryWithProductsDTO>> GetProductsByCategoryAsync();
         Task<Alltabledataforlisting> getallinactiveproducts(Guid id);
         Task<Alltabledataforlisting> GetActiveProduct(Guid id);
-
+        Task<string> CreateEmployeeAsync(CreateEmployeeDto dto);
 
 
         Task<List<Alltabledataforlisting>> GetAllProductsAsyncbyproductsandimageid();

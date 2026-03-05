@@ -98,8 +98,17 @@ namespace ServicePro.API.Controllers
             var result = await _service.GetProductsByCategoryAsync();
             return Ok(result);
         }
+        [HttpPost("create-employee")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> CreateEmployee([FromForm] CreateEmployeeDto dto)
+        {
+            if (dto == null)
+                return BadRequest("Invalid employee data.");
 
+            var result = await _service.CreateEmployeeAsync(dto);
+
+            return Ok(result);
+        }
 
     }
-
 }

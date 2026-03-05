@@ -198,7 +198,45 @@ namespace ServicePro.Services
 
             return result;
         }
+        public async Task<string> CreateEmployeeAsync(CreateEmployeeDto dto)
+        {
+            var indianTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(
+                                DateTime.UtcNow,
+                                "India Standard Time");
 
+            string imageUrl = null;
+
+            // ✅ Upload Image if Exists
+            if (dto.Profilepic != null)
+            {
+                var uploadResult = await _cloudinary.UploadImageAsync(dto.Profilepic);
+
+                imageUrl = uploadResult.url;  // ✅ Correct for tuple
+            }
+
+            var employee = new Employee
+            {
+                Employeeid = Guid.NewGuid(),
+                Employeename = dto.Employeename,
+                email = dto.email,
+                phone_number = dto.phone_number,
+                hire_date = dto.hire_date,
+                job_title = dto.job_title,
+                role = dto.role,
+                isactive = dto.isactive,
+                isarchived = dto.isarchived,
+                created_at = indianTime,
+                updated_at = indianTime,
+                employeeadress = dto.employeeadress,
+                AdharcardNumber = dto.AdharcardNumber,
+                Profilepic = imageUrl   // ✅ Save Cloudinary Image URL
+            };
+
+            await _context.Employees.AddAsync(employee);
+            await _context.SaveChangesAsync();
+
+            return employee.Employeeid.ToString();
+        }
 
         public async Task<List<CategoryWithProductsDTO>> GetProductsByCategoryAsync()
         {
