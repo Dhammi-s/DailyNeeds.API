@@ -39,10 +39,8 @@ namespace ServicePro.Services
                     Profilepic = e.Profilepic ?? ""
                 })
                 .ToListAsync();
-             
-                return allemployees;
-                        }
-                
-                        }
-          }
+             return allemployees;
+        }
+    }
+}
                 
