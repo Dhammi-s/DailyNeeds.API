@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ServicePro.Core.DTOs;
+using ServicePro.Core.DTOs.outbound;
 using ServicePro.Core.Entities;
 using ServicePro.Core.Entities;
 using System;
@@ -25,10 +26,15 @@ namespace ServicePro.Infrastructure.Data
 
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<OfficeListDto> OfficeList { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<OfficeListDto>().HasNoKey();
 
             // Product → ProductImages One-To-Many
             modelBuilder.Entity<Product>()
