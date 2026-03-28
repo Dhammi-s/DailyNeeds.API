@@ -50,7 +50,6 @@ namespace ServicePro.API.Controllers
 
             return Ok(result);
         }
-        [Authorize(Roles = "Admin")]
         [HttpPut("{clientId}")]
         public async Task<IActionResult> UpdateClient(Guid clientId, [FromBody] Client client)
         {
