@@ -38,7 +38,6 @@ namespace ServicePro.API.Controllers
 
             return Ok(result);
         }
-        [Authorize(Roles = "Admin")]
         [HttpGet("client/{clientId}")]
         public async Task<IActionResult> GetClientByClientId(Guid clientId)
         {
