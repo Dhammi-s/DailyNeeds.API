@@ -16,12 +16,18 @@ namespace ServicePro.Core.Entities
 
         public DateTime OriginDate { get; set; }
 
-        public DateTime ExpirationDate { get; set; }
+        public DateTime? ExpirationDate { get; set; }
 
         public string LicenseNo { get; set; }
 
         public string Notes { get; set; }
 
         public string Status { get; set; }
+
+        public byte[] FileData { get; set; }
+
+        public string FileName { get; set; }
+
+        public string FileType { get; set; }
     }
 }

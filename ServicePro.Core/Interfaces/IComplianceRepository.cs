@@ -12,6 +12,7 @@ namespace ServicePro.Core.Interfaces
     {
         Task AddComplianceAsync(ComplianceRequest request);
         Task<List<ComplianceSpResult>> GetCompliancesByClientId(Guid clientId);
+        Task<Compliance> GetComplianceFileById(Guid id);
 
     }
 }

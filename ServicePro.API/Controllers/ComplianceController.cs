@@ -31,5 +31,19 @@ namespace ServicePro.API.Controllers
 
             return Ok(result);
         }
+        [HttpGet("download/{id}")]
+        public async Task<IActionResult> DownloadComplianceFile(Guid id)
+        {
+            var compliance = await _service.GetComplianceFileById(id);
+
+            if (compliance == null || compliance.FileData == null)
+                return NotFound();
+
+            return File(
+                compliance.FileData,
+                compliance.FileType,
+                compliance.FileName
+            );
+        }
     }
 }

@@ -21,5 +21,11 @@ namespace ServicePro.Core.DTOs.Inbound
         public string Notes { get; set; }
 
         public string Status { get; set; }
+
+        public string FileBase64 { get; set; }
+
+        public string FileName { get; set; }
+
+        public string FileType { get; set; }
     }
 }

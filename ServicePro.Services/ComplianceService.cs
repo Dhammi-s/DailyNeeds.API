@@ -26,5 +26,10 @@ namespace ServicePro.Services
         {
             return await _repository.GetCompliancesByClientId(clientId);
         }
+
+        public async Task<Compliance> GetComplianceFileById(Guid id)
+        {
+            return await _repository.GetComplianceFileById(id);
+        }
     }
 }

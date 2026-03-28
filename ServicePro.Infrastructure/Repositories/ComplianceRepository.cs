@@ -22,6 +22,13 @@ namespace ServicePro.Infrastructure.Repositories
 
         public async Task AddComplianceAsync(ComplianceRequest request)
         {
+            byte[] fileBytes = null;
+
+            if (!string.IsNullOrEmpty(request.FileBase64))
+            {
+                fileBytes = Convert.FromBase64String(request.FileBase64);
+            }
+
             var compliance = new Compliance
             {
                 ComplianceId = Guid.NewGuid(),
@@ -31,7 +38,10 @@ namespace ServicePro.Infrastructure.Repositories
                 ExpirationDate = request.ExpirationDate,
                 LicenseNo = request.LicenseNo,
                 Notes = request.Notes,
-                Status = request.Status
+                Status = request.Status,
+                FileData = fileBytes,
+                FileName = request.FileName,
+                FileType = request.FileType
             };
 
             _context.Compliances.Add(compliance);
@@ -45,6 +55,12 @@ namespace ServicePro.Infrastructure.Repositories
                 .ToListAsync();
 
             return result;
+        }
+        public async Task<Compliance> GetComplianceFileById(Guid id)
+        {
+            return await _context.Compliances
+                .Where(x => x.ComplianceId == id)
+                .FirstOrDefaultAsync();
         }
     }
 }
