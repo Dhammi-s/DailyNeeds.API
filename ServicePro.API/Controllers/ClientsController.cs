@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServicePro.Core.Interfaces;
 using ServicePro.Infrastructure.Data;
@@ -17,7 +18,7 @@ namespace ServicePro.API.Controllers
         {
             _service = service;
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateClient([FromBody] Client model)
         {
@@ -29,6 +30,7 @@ namespace ServicePro.API.Controllers
                 data = result
             });
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet("get-all-clients")]
         public async Task<IActionResult> GetAllClients()
         {
@@ -36,6 +38,7 @@ namespace ServicePro.API.Controllers
 
             return Ok(result);
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet("client/{clientId}")]
         public async Task<IActionResult> GetClientByClientId(Guid clientId)
         {
@@ -48,6 +51,7 @@ namespace ServicePro.API.Controllers
 
             return Ok(result);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut("{clientId}")]
         public async Task<IActionResult> UpdateClient(Guid clientId, [FromBody] Client client)
         {

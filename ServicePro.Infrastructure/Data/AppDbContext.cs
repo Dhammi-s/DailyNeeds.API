@@ -28,21 +28,29 @@ namespace ServicePro.Infrastructure.Data
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<OfficeListDto> OfficeList { get; set; }
+        public DbSet<CareLog> CareLogs { get; set; }
 
-
+        public DbSet<CareLogActivity> CareLogActivities { get; set; }
+        public DbSet<CarePlanSpResult> CarePlanSpResults { get; set; }
+        public DbSet<Compliance> Compliances { get; set; }
+        public DbSet<ComplianceSpResult> ComplianceSpResults { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<OfficeListDto>().HasNoKey();
-
+            modelBuilder.Entity<CarePlanSpResult>().HasNoKey();
+            modelBuilder.Entity<ComplianceSpResult>().HasNoKey();
             // Product → ProductImages One-To-Many
             modelBuilder.Entity<Product>()
                 .HasMany(p => p.ProductImages)
                 .WithOne(pi => pi.Product)
                 .HasForeignKey(pi => pi.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
-
+            modelBuilder.Entity<CareLogActivity>()
+       .HasOne<CareLog>()
+       .WithMany(x => x.Activities)
+       .HasForeignKey(x => x.CareLogId);
             // Optional: Decimal precision fix
             modelBuilder.Entity<Product>()
                 .Property(p => p.Price)
