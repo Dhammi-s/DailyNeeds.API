@@ -44,6 +44,8 @@ builder.Services.AddScoped<IOfficeService, OfficeService>();
 builder.Services.AddScoped<ICareLogRepository, CareLogRepository>();
 builder.Services.AddScoped<ICareLogService, CareLogService>();
 builder.Services.AddScoped<IComplianceRepository, ComplianceRepository>();
+builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
+builder.Services.AddScoped<IScheduleService, ScheduleService>();
 
 builder.Services.AddScoped<IComplianceService, ComplianceService>();
 // ================= JWT AUTH =================

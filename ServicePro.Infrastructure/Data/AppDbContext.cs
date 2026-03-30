@@ -33,11 +33,26 @@ namespace ServicePro.Infrastructure.Data
         public DbSet<CareLogActivity> CareLogActivities { get; set; }
         public DbSet<CarePlanSpResult> CarePlanSpResults { get; set; }
         public DbSet<Compliance> Compliances { get; set; }
+        public DbSet<ScheduleSeries> ScheduleSeries { get; set; }
+        public DbSet<Schedule> Schedules { get; set; }
+
+
         public DbSet<ComplianceSpResult> ComplianceSpResults { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<ScheduleSeries>()
+           .HasKey(s => s.SeriesId);
 
+            modelBuilder.Entity<Schedule>()
+                .HasKey(s => s.ScheduleId);
+
+            // Relationship: Schedule 1 - * Series
+            modelBuilder.Entity<Schedule>()
+                .HasMany(s => s.Series)
+                .WithOne(s => s.Schedule)
+                .HasForeignKey(s => s.ScheduleId)
+                .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<OfficeListDto>().HasNoKey();
             modelBuilder.Entity<CarePlanSpResult>().HasNoKey();
             modelBuilder.Entity<ComplianceSpResult>().HasNoKey();
