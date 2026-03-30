@@ -1,4 +1,5 @@
-﻿using ServicePro.Core.DTOs.outbound;
+﻿using ServicePro.Core.DTOs.Inbound;
+using ServicePro.Core.DTOs.outbound;
 using ServicePro.Core.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,10 @@ namespace ServicePro.Services
         public async Task<List<OfficeListDto>> GetOfficeList()
         {
             return await _officeRepository.GetOfficeList();
+        }
+        public async Task AddOffice(AddOfficeRequest request)
+        {
+            await _officeRepository.AddOffice(request);
         }
     }
 }

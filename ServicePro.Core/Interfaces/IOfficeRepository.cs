@@ -1,4 +1,5 @@
-﻿using ServicePro.Core.DTOs.outbound;
+﻿using ServicePro.Core.DTOs.Inbound;
+using ServicePro.Core.DTOs.outbound;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace ServicePro.Core.Interfaces
     public interface IOfficeRepository
     {
         Task<List<OfficeListDto>> GetOfficeList();
+        Task AddOffice(AddOfficeRequest request);
+
     }
 }

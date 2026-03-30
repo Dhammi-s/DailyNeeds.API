@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ServicePro.Core.DTOs.Inbound;
 using ServicePro.Core.Interfaces;
 
 namespace ServicePro.API.Controllers
@@ -14,6 +15,13 @@ namespace ServicePro.API.Controllers
         public OfficeController(IOfficeService officeService)
         {
             _officeService = officeService;
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddOffice(AddOfficeRequest request)
+        {
+            await _officeService.AddOffice(request);
+
+            return Ok("Office Created Successfully");
         }
         [Authorize(Roles = "Admin")]
         [HttpGet("office-list")]
