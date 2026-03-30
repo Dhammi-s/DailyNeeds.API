@@ -37,6 +37,17 @@ builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
 builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IPdfService, PdfService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<IOfficeRepository, OfficeRepository>();
+builder.Services.AddScoped<IOfficeService, OfficeService>();
+builder.Services.AddScoped<ICareLogRepository, CareLogRepository>();
+builder.Services.AddScoped<ICareLogService, CareLogService>();
+builder.Services.AddScoped<IComplianceRepository, ComplianceRepository>();
+builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
+builder.Services.AddScoped<IScheduleService, ScheduleService>();
+
+builder.Services.AddScoped<IComplianceService, ComplianceService>();
 // ================= JWT AUTH =================
 var jwtKey = builder.Configuration["Jwt:Key"];
 var jwtIssuer = builder.Configuration["Jwt:Issuer"];
