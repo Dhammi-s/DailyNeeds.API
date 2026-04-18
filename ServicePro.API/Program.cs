@@ -4,9 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using QuestPDF.Infrastructure;
 using ServicePro.Core.Interfaces;
+using ServicePro.Core.Interfaces.CommonRepositoryInterfaces;
 using ServicePro.Infrastructure.Data;
 using ServicePro.Infrastructure.Repositories;
+using ServicePro.Infrastructure.Repositories.CommonRepository;
 using ServicePro.Services;
+using ServicePro.Services.CommonService;
 using System.Text;
 
 //add this to enable IIS synchronous IO for QuestPDF
@@ -46,7 +49,8 @@ builder.Services.AddScoped<ICareLogService, CareLogService>();
 builder.Services.AddScoped<IComplianceRepository, ComplianceRepository>();
 builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
 builder.Services.AddScoped<IScheduleService, ScheduleService>();
-
+builder.Services.AddScoped<ICommonService, CommonService>();
+builder.Services.AddScoped<ICommonRepository, CommonRepository>();
 builder.Services.AddScoped<IComplianceService, ComplianceService>();
 // ================= JWT AUTH =================
 var jwtKey = builder.Configuration["Jwt:Key"];

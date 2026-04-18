@@ -35,6 +35,8 @@ namespace ServicePro.Infrastructure.Data
         public DbSet<Compliance> Compliances { get; set; }
         public DbSet<ScheduleSeries> ScheduleSeries { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<Categories> Categories { get; set; }
+
 
 
         public DbSet<ComplianceSpResult> ComplianceSpResults { get; set; }
