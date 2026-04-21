@@ -5,11 +5,15 @@ using Microsoft.IdentityModel.Tokens;
 using QuestPDF.Infrastructure;
 using ServicePro.Core.Interfaces;
 using ServicePro.Core.Interfaces.CommonRepositoryInterfaces;
+using ServicePro.Core.Interfaces.Databaseinterface;
 using ServicePro.Infrastructure.Data;
 using ServicePro.Infrastructure.Repositories;
 using ServicePro.Infrastructure.Repositories.CommonRepository;
+using ServicePro.Infrastructure.Repositories.Databasemasterrepo;
 using ServicePro.Services;
 using ServicePro.Services.CommonService;
+using ServicePro.Services.CommonService.Databasemiddleware;
+using ServicePro.Services.DatabasemasterService;
 using System.Text;
 
 //add this to enable IIS synchronous IO for QuestPDF
@@ -26,6 +30,8 @@ builder.Services.Configure<FormOptions>(options =>
 {
     options.MultipartBodyLengthLimit = 104857600; // 100MB
 });
+builder.Services.AddHttpContextAccessor();
+
 // ================= DATABASE =================
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Service")));
@@ -52,6 +58,8 @@ builder.Services.AddScoped<IScheduleService, ScheduleService>();
 builder.Services.AddScoped<ICommonService, CommonService>();
 builder.Services.AddScoped<ICommonRepository, CommonRepository>();
 builder.Services.AddScoped<IComplianceService, ComplianceService>();
+builder.Services.AddScoped<ITenantRepository, TenantRepository>();
+builder.Services.AddScoped<ITenantService, TenantService>();
 // ================= JWT AUTH =================
 var jwtKey = builder.Configuration["Jwt:Key"];
 var jwtIssuer = builder.Configuration["Jwt:Issuer"];
@@ -120,7 +128,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
-
+app.UseMiddleware<TenantMiddleware>();
 app.UseHttpsRedirection();
 app.UseCors("AllowReact");
 

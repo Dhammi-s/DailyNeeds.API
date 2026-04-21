@@ -1,27 +1,35 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Data.SqlClient;
 using ServicePro.Core.Entities;
 using ServicePro.Core.Interfaces;
-using ServicePro.Infrastructure.Data;
 using System.Data;
 
 namespace ServicePro.Infrastructure.Repositories
 {
     public class AuthRepository : IAuthRepository
     {
-        private readonly AppDbContext context;
+        private readonly IHttpContextAccessor _http;
 
-        public AuthRepository(AppDbContext context)
+        public AuthRepository(IHttpContextAccessor http)
         {
-            this.context = context;
+            _http = http;
+        }
+
+        private SqlConnection GetConnection()
+        {
+            var connStr = _http.HttpContext?.Items["Conn"]?.ToString();
+
+            if (string.IsNullOrEmpty(connStr))
+                throw new Exception("❌ Connection not found from TenantMiddleware");
+
+            return new SqlConnection(connStr);
         }
 
         public async Task RegisterUserAsync(User user)
         {
-            using IDbConnection db =
-                new SqlConnection(context.Database.GetDbConnection().ConnectionString);
+            using SqlConnection db = GetConnection();
 
-            using SqlCommand cmd = new SqlCommand("sp_RegisterUser", (SqlConnection)db);
+            using SqlCommand cmd = new SqlCommand("sp_RegisterUser", db);
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@Name", user.Name);
@@ -30,20 +38,20 @@ namespace ServicePro.Infrastructure.Repositories
             cmd.Parameters.AddWithValue("@PhoneNumber", user.PhoneNumber);
             cmd.Parameters.AddWithValue("@Role", user.Role);
 
-            db.Open();
+            await db.OpenAsync();
             await cmd.ExecuteNonQueryAsync();
         }
 
         public async Task<User?> GetUserByEmailAsync(string email)
         {
-            using IDbConnection db =
-                new SqlConnection(context.Database.GetDbConnection().ConnectionString);
+            using SqlConnection db = GetConnection();
 
-            using SqlCommand cmd = new SqlCommand("sp_LoginUser", (SqlConnection)db);
+            using SqlCommand cmd = new SqlCommand("sp_LoginUser", db);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Email", email);
 
-            db.Open();
+            await db.OpenAsync();
+
             using var reader = await cmd.ExecuteReaderAsync();
 
             if (!reader.Read()) return null;
