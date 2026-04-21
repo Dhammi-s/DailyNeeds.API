@@ -2,33 +2,24 @@
 using Microsoft.Data.SqlClient;
 using ServicePro.Core.Entities;
 using ServicePro.Core.Interfaces;
+using ServicePro.Core.Interfaces.Databaseinterface;
 using System.Data;
 
 namespace ServicePro.Infrastructure.Repositories
 {
     public class AuthRepository : IAuthRepository
     {
-        private readonly IHttpContextAccessor _http;
+        private readonly IDbConnectionFactory _dbFactory;
 
-        public AuthRepository(IHttpContextAccessor http)
+        public AuthRepository(IDbConnectionFactory dbFactory)
         {
-            _http = http;
+            _dbFactory = dbFactory;
         }
 
-        private SqlConnection GetConnection()
-        {
-            var connStr = _http.HttpContext?.Items["Conn"]?.ToString();
-
-            if (string.IsNullOrEmpty(connStr))
-                throw new Exception("❌ Connection not found from TenantMiddleware");
-
-            return new SqlConnection(connStr);
-        }
 
         public async Task RegisterUserAsync(User user)
         {
-            using SqlConnection db = GetConnection();
-
+            using SqlConnection db = _dbFactory.CreateConnection();
             using SqlCommand cmd = new SqlCommand("sp_RegisterUser", db);
             cmd.CommandType = CommandType.StoredProcedure;
 
@@ -44,8 +35,7 @@ namespace ServicePro.Infrastructure.Repositories
 
         public async Task<User?> GetUserByEmailAsync(string email)
         {
-            using SqlConnection db = GetConnection();
-
+            using SqlConnection db = _dbFactory.CreateConnection();
             using SqlCommand cmd = new SqlCommand("sp_LoginUser", db);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Email", email);
