@@ -6,14 +6,18 @@ using QuestPDF.Infrastructure;
 using ServicePro.Core.Interfaces;
 using ServicePro.Core.Interfaces.CommonRepositoryInterfaces;
 using ServicePro.Core.Interfaces.Databaseinterface;
+using ServicePro.Core.Interfaces.IworkerRepository;
+using ServicePro.Core.Interfaces.workerinterfaces;
 using ServicePro.Infrastructure.Data;
 using ServicePro.Infrastructure.Repositories;
 using ServicePro.Infrastructure.Repositories.CommonRepository;
 using ServicePro.Infrastructure.Repositories.Databasemasterrepo;
+using ServicePro.Infrastructure.Repositories.WorkerREpo;
 using ServicePro.Services;
 using ServicePro.Services.CommonService;
 using ServicePro.Services.CommonService.Databasemiddleware;
 using ServicePro.Services.DatabasemasterService;
+using ServicePro.Services.Worker;
 using System.Text;
 
 //add this to enable IIS synchronous IO for QuestPDF
@@ -61,6 +65,9 @@ builder.Services.AddScoped<IComplianceService, ComplianceService>();
 builder.Services.AddScoped<ITenantRepository, TenantRepository>();
 builder.Services.AddScoped<ITenantService, TenantService>();
 builder.Services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
+builder.Services.AddScoped<IWorkerService, WorkerService>();
+builder.Services.AddScoped<IWorkerRepository, WorkerRepository>();
+
 // ================= JWT AUTH =================
 var jwtKey = builder.Configuration["Jwt:Key"];
 var jwtIssuer = builder.Configuration["Jwt:Issuer"];

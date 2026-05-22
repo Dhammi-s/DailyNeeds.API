@@ -15,5 +15,12 @@ namespace ServicePro.Core.Entities
         public string PhoneNumber { get; set; } = string.Empty;
         public string Role { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
+        public ICollection<WorkerSkill> WorkerSkills { get; set; }
+    = new List<WorkerSkill>();
+
+        public WorkerProfile? WorkerProfile { get; set; }
+
+        public ICollection<WorkerCertificate> WorkerCertificates { get; set; }
+            = new List<WorkerCertificate>();
     }
 }

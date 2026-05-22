@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 
-namespace ServicePro.Services
-{
-    internal class InvoiceService
-    {
-    }
-}
+//namespace ServicePro.Services
+//{
+//    public class InvoiceService
+//    {
+//    }
+//}

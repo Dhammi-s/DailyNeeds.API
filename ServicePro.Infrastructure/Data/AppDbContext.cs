@@ -36,7 +36,11 @@ namespace ServicePro.Infrastructure.Data
         public DbSet<ScheduleSeries> ScheduleSeries { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Categories> Categories { get; set; }
+        public DbSet<WorkerProfile> WorkerProfiles { get; set; }
 
+        public DbSet<WorkerSkill> WorkerSkills { get; set; }
+
+        public DbSet<WorkerCertificate> WorkerCertificates { get; set; }
 
 
         public DbSet<ComplianceSpResult> ComplianceSpResults { get; set; }
